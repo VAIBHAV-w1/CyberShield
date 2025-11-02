@@ -1,0 +1,25 @@
+- [x] Create backend/routes/auth.js: Login, signup, OTP verification routes (OTP required for every login)
+- [x] Create backend/utils/sendOtp.js: OTP sending functionality
+- [x] Create backend/utils/verifyJwt.js: JWT token verification
+- [x] Create frontend/src/pages/Login.jsx: Login form with OTP verification
+- [x] Create frontend/src/pages/Signup.jsx: Signup form with OTP
+- [x] Update backend/server.js: Add auth routes and middleware
+- [x] Update frontend/src/App.jsx: Add login/signup routes
+- [x] Update frontend/src/components/Navbar.jsx: Add conditional login/signup/logout links
+- [x] Enhance frontend/src/pages/Dashboard.jsx: Add stats cards, activity feed, recent tools used
+- [x] Enhance frontend/src/pages/ThreatDashboard.jsx: Add real-time threat map, alerts notifications, threat trends chart
+- [x] Enhance frontend/src/components/ToolCard.jsx: Improve hover effects, add usage stats, better cybersecurity theming
+- [x] Install required dependencies (jsonwebtoken, bcryptjs, nodemailer for auth)
+- [x] Test complete authentication flow (signup → OTP → login → OTP → dashboard)
+- [x] Verify enhanced UI responsiveness and theming
+- [x] Ensure all tools remain functional with auth
+- [ ] Enhance overall design with advanced cybersecurity aesthetics (dark gradients, neon accents, cyber patterns)
+- [ ] Add interactive dashboard widgets (animated charts, live counters, security alerts)
+- [ ] Implement advanced Threat Dashboard features (interactive maps, threat heatmaps, predictive analytics)
+- [ ] Add cybersecurity-themed animations and micro-interactions
+- [ ] Optimize UI for mobile devices with responsive cyber-themed layouts
+- [ ] Add user profile management and security settings
+- [ ] Implement dark/light theme toggle with cyber aesthetics
+- [ ] Add real-time notifications system for security alerts
+- [ ] Enhance accessibility with cyber-themed focus states and ARIA labels
+- [ ] Add advanced dashboard analytics (usage patterns, threat correlations, performance metrics)
