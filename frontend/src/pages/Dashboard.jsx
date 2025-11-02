@@ -46,7 +46,7 @@ const Dashboard = () => {
     { title: 'File Encryption', description: 'Encrypt and decrypt files securely', link: '/encrypt-file', icon: '🔒', usage: stats.filesSecured },
     { title: 'Data Leak Checker', description: 'Check if your email has been involved in data breaches', link: '/data-leak-check', icon: '🔓', usage: 0 },
     { title: 'Spam Detection', description: 'Analyze text for spam content', link: '/spam-check', icon: '📧', usage: 0 },
-    { title: 'SQL Injection Check', description: 'Detect SQL injection vulnerabilities in URLs', link: '/sql-check', icon: '💉', usage: 0 },
+
     { title: 'Deepfake Detector', description: 'Check files for deepfake manipulation', link: '/deepfake', icon: '🎭', usage: 0 },
     { title: 'Threat Dashboard', description: 'View security threats and alerts', link: '/threat-dashboard', icon: '⚠️', usage: 0 },
     { title: 'Chatbot', description: 'AI-powered cybersecurity assistant', link: '/chatbot', icon: '🤖', usage: 0 },

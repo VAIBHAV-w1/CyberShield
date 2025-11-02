@@ -43,7 +43,7 @@ const Navbar = () => {
     { path: '/phishing-check', label: 'Phishing Check' },
     { path: '/password-tool', label: 'Password Tool' },
     { path: '/encrypt-file', label: 'File Encryption' },
-    { path: '/sql-check', label: 'SQL Injection Check' },
+
     { path: '/spam-check', label: 'Spam Check' },
     { path: '/deepfake', label: 'Deepfake Detector' },
     { path: '/chatbot', label: 'AI Chatbot' },

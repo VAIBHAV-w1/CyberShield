@@ -11,7 +11,6 @@ import PasswordTool from './pages/PasswordTool'
 import EncryptFile from './pages/EncryptFile'
 import DataLeakCheck from './pages/DataLeakCheck'
 import SpamCheck from './pages/SpamCheck'
-import SqlCheck from './pages/SqlCheck'
 import Deepfake from './pages/Deepfake'
 import Chatbot from './pages/Chatbot'
 import ThreatDashboard from './pages/ThreatDashboard'
@@ -31,7 +30,6 @@ function App() {
             <Route path="/encrypt-file" element={<EncryptFile />} />
             <Route path="/data-leak-check" element={<DataLeakCheck />} />
             <Route path="/spam-check" element={<SpamCheck />} />
-            <Route path="/sql-check" element={<SqlCheck />} />
             <Route path="/deepfake" element={<Deepfake />} />
             <Route path="/chatbot" element={<Chatbot />} />
             <Route path="/threat-dashboard" element={<ThreatDashboard />} />
