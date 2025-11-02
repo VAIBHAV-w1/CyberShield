@@ -33,8 +33,11 @@ if (process.env.OPENAI_API_KEY) {
   });
 }
 
-// Configure multer for file uploads
-const upload = multer({ dest: 'uploads/' });
+// Configure multer for file uploads (use memory storage for serverless)
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+});
 
 
 
@@ -298,7 +301,8 @@ router.post('/encrypt-file', verifyToken, async (req, res) => {
     }
 
     const { encryptFile, decryptFile } = require('../utils/encrypt');
-    const input = fs.readFileSync(file.path);
+    // Use file.buffer for memory storage instead of file.path
+    const input = file.buffer;
 
     let processedBuffer;
     if (action === 'encrypt') {
@@ -313,16 +317,18 @@ router.post('/encrypt-file', verifyToken, async (req, res) => {
     const extension = originalName.substring(originalName.lastIndexOf('.') + 1);
     const downloadName = action === 'encrypt' ? `${baseName}_encrypted.${extension}` : `${baseName}_decrypted.${extension}`;
 
-    // Save processed file with download name
-    const downloadPath = `uploads/${downloadName}`;
-    fs.writeFileSync(downloadPath, processedBuffer);
+    // Return file as base64 data URL for download (serverless compatible)
+    const mimeType = file.mimetype || 'application/octet-stream';
+    const base64Data = processedBuffer.toString('base64');
+    const dataUrl = `data:${mimeType};base64,${base64Data}`;
 
     res.json({
       message: `${action}ed successfully`,
       key: key.toString('hex'),
       iv: iv.toString('hex'),
       file: downloadName,
-      downloadUrl: `/uploads/${downloadName}` // Frontend can use this to download
+      dataUrl: dataUrl, // Frontend can use this to download the file
+      size: processedBuffer.length
     });
   } catch (error) {
     console.error('Encryption error:', error);
@@ -516,7 +522,6 @@ router.post('/deepfake', verifyToken, upload.single('file'), async (req, res) =>
     if (!file) return res.status(400).json({ message: 'No file uploaded' });
 
     const sharp = require('sharp');
-    const fs = require('fs');
     const path = require('path');
 
     // Check file extension
@@ -525,7 +530,8 @@ router.post('/deepfake', verifyToken, upload.single('file'), async (req, res) =>
       return res.status(400).json({ message: 'Unsupported file format. Please upload an image.' });
     }
 
-    const imageBuffer = fs.readFileSync(file.path);
+    // Use file.buffer for memory storage instead of file.path
+    const imageBuffer = file.buffer;
 
     // Use Sharp for advanced image analysis
     const metadata = await sharp(imageBuffer).metadata();
@@ -843,6 +849,109 @@ async function fetchThreatData() {
     ];
   }
 }
+
+// SQL Injection Checker
+router.post('/sql-check', verifyToken, async (req, res) => {
+  try {
+    const { url } = req.body;
+    if (!url) return res.status(400).json({ message: 'URL is required' });
+
+    let vulnerable = false;
+    const indicators = [];
+    const recommendations = [];
+
+    // Parse URL to extract query parameters
+    let parsedUrl;
+    try {
+      parsedUrl = new URL(url);
+    } catch (error) {
+      return res.status(400).json({ message: 'Invalid URL format' });
+    }
+
+    const queryParams = parsedUrl.searchParams;
+
+    // Common SQL injection patterns
+    const sqlPatterns = [
+      "'",
+      '"',
+      ' OR ',
+      ' AND ',
+      '--',
+      '#',
+      '/*',
+      '*/',
+      'UNION',
+      'SELECT',
+      'INSERT',
+      'UPDATE',
+      'DELETE',
+      'DROP',
+      'EXEC',
+      'EXECUTE',
+      'SCRIPT',
+      'ALERT',
+      '<script>',
+      'javascript:',
+      'onload=',
+      'onerror='
+    ];
+
+    // Check each query parameter for SQL injection patterns
+    for (const [key, value] of queryParams) {
+      const paramValue = value.toLowerCase();
+
+      sqlPatterns.forEach(pattern => {
+        if (paramValue.includes(pattern.toLowerCase())) {
+          vulnerable = true;
+          indicators.push(`Parameter "${key}" contains suspicious pattern: "${pattern}"`);
+        }
+      });
+
+      // Check for encoded patterns
+      const decodedValue = decodeURIComponent(value);
+      sqlPatterns.forEach(pattern => {
+        if (decodedValue.toLowerCase().includes(pattern.toLowerCase())) {
+          vulnerable = true;
+          indicators.push(`Parameter "${key}" contains encoded suspicious pattern: "${pattern}"`);
+        }
+      });
+    }
+
+    // Additional checks
+    const urlString = url.toLowerCase();
+
+    // Check for multiple parameters with same suspicious patterns
+    if (vulnerable) {
+      recommendations.push('Use prepared statements or parameterized queries');
+      recommendations.push('Validate and sanitize all user inputs');
+      recommendations.push('Implement proper input validation and escaping');
+      recommendations.push('Use web application firewalls (WAF)');
+    }
+
+    // Check for common vulnerable patterns in URL structure
+    if (urlString.includes('id=') && /\d+/.test(queryParams.get('id') || '')) {
+      // This is normal, but flag if combined with suspicious patterns
+      if (vulnerable) {
+        indicators.push('ID parameter with suspicious patterns detected');
+      }
+    }
+
+    let message = vulnerable
+      ? 'Potential SQL injection vulnerability detected. Review the indicators and implement security measures.'
+      : 'No obvious SQL injection patterns detected, but always follow security best practices.';
+
+    res.json({
+      url: url,
+      vulnerable,
+      indicators: indicators.slice(0, 5), // Limit to top 5 indicators
+      recommendations: recommendations.slice(0, 4), // Limit to top 4 recommendations
+      message
+    });
+  } catch (error) {
+    console.error('SQL check error:', error);
+    res.status(500).json({ message: 'Error analyzing URL' });
+  }
+});
 
 // AI Chatbot
 router.post('/chat', verifyToken, async (req, res) => {
