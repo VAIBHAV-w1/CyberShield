@@ -50,23 +50,28 @@ npm run dev
 
 ### 🛡️ Main Dashboard & UI
 *(Overview of the user interface and main tools)*
-![Dashboard UI](screenshots/dashboard.png)
+
+<img src="https://placehold.co/800x400/1e1e2f/ffffff?text=Dashboard+Overview+Screenshot" alt="Dashboard UI" width="100%">
 
 ### 📊 Threat Monitoring Graphs & Results
 *(Visual representation of monitored threats and honeypots)*
-![Threat Monitoring Graphs](screenshots/graphs.png)
+
+<img src="https://placehold.co/800x400/1e1e2f/ffffff?text=Threat+Monitoring+Graphs" alt="Threat Monitoring Graphs" width="100%">
 
 ### 🔍 Phishing Detection Outputs
 *(Analysis results for potentially malicious URLs)*
-![Phishing Detection](screenshots/phishing_detection.png)
+
+<img src="https://placehold.co/800x400/1e1e2f/ffffff?text=Phishing+Detection+Output" alt="Phishing Detection" width="100%">
 
 ### 🤖 AI Cybersecurity Assistant
 *(Chatbot interface providing security advice)*
-![AI Chatbot](screenshots/chatbot.png)
+
+<img src="https://placehold.co/800x400/1e1e2f/ffffff?text=AI+Cybersecurity+Chatbot" alt="AI Chatbot" width="100%">
 
 ### 🔐 Password Analysis
 *(Password strength checking and generation tool)*
-![Password Analysis](screenshots/password_tool.png)
+
+<img src="https://placehold.co/800x400/1e1e2f/ffffff?text=Password+Analysis+Tool" alt="Password Analysis" width="100%">
 
 # 8. FUTURE IMPROVEMENTS
 - Real-time threat intelligence feeds
