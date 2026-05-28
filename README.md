@@ -1,83 +1,63 @@
-# 1. PROJECT TITLE
-CyberShield – Comprehensive Cybersecurity Toolkit
+CyberShield — Comprehensive Cybersecurity Toolkit & Threat Monitoring
+Short Description
+A comprehensive, AI-powered cybersecurity toolkit built with Node.js and React. Designed to enhance digital safety through intelligent phishing detection, robust password management, an AI cybersecurity advisor, and a real-time threat dashboard with honeypot monitoring.
 
-# 2. SHORT DESCRIPTION
-A robust cybersecurity toolkit built with a Node.js backend and React frontend for phishing detection, password analysis, AI-powered threat monitoring, and secure authentication.
+Features
+AI-Powered Chatbot: Intelligent cybersecurity advisor for instant threat analysis and security recommendations.
+Phishing Detection: Real-time URL scanning and analysis to detect malicious or fraudulent links.
+Password Toolkit: Advanced password strength checking and secure password generation.
+Threat Dashboard: Real-time monitoring interface with active honeypot deployment and analysis.
+Secure Authentication: JWT-based user authentication integrated with email-delivered OTP verification.
 
-# 3. FEATURES
-- User authentication with JWT & OTP
-- Phishing URL detection
-- Password strength checking and generation
-- AI-powered chatbot for cybersecurity advice
-- Threat dashboard with honeypot monitoring
+Tech Stack
+Backend: Node.js, Express.js, JWT, bcryptjs, nodemailer
+Frontend: React 18, Vite, React Router, Axios, Tailwind CSS
+Database: MongoDB with Mongoose
 
-# 4. TECH STACK
-- Node.js
-- Express.js
-- MongoDB
-- React 18
-- Tailwind CSS
-
-# 5. PROJECT STRUCTURE
-```
+Project Structure
 CyberShield/
-│── backend/
-│── frontend/
-│── deepfake_test_face.png
-│── README.md
-│── TODO.md
-│── package.json
-│── vercel.json
-```
+├── backend/
+│   ├── models/                 # Database schemas
+│   ├── routes/                 # API endpoints
+│   ├── utils/                  # Helper functions
+│   ├── server.js               # Express server entry point
+│   ├── package.json            # Backend dependencies
+│   └── .env                    # Environment configuration
+└── frontend/
+    ├── src/
+    │   ├── components/         # Reusable React components
+    │   ├── pages/              # Main application views
+    │   ├── App.jsx             # Root component
+    │   ├── main.jsx            # React entry point
+    │   └── index.css           # Global Tailwind styles
+    ├── index.html              # Main HTML template
+    ├── package.json            # Frontend dependencies
+    └── vite.config.js          # Vite bundler configuration
 
-# 6. INSTALLATION
-```bash
+Installation
 git clone https://github.com/VAIBHAV-w1/CyberShield.git
-cd CyberShield
 
 # Backend Setup
-cd backend
+cd CyberShield/backend
 npm install
+# Create .env file with MONGODB_URI, JWT_SECRET, EMAIL_USER, EMAIL_PASS, PORT
 npm run dev
 
 # Frontend Setup
 cd ../frontend
 npm install
 npm run dev
-```
 
-# 7. SCREENSHOTS
+Screenshots
+Threat Dashboard: Real-time monitoring metrics, honeypot alerts, and system health status.
+Phishing Scanner: URL input interface with instant threat analysis results and safety indicators.
+AI Cybersecurity Advisor: Interactive chat interface for personalized security recommendations.
+Authentication Portal: Secure login and registration flows with OTP verification inputs.
 
-### 🛡️ Main Dashboard & UI
-*(Overview of the user interface and main tools)*
+Future Improvements
+Automated malware signature scanning for uploaded files.
+Integration with global threat intelligence feeds for live updates.
+Multi-factor authentication (MFA) via authenticator apps (TOTP).
 
-![Dashboard UI](screenshots/dashboard.png)
-
-### 📊 Threat Monitoring Graphs & Results
-*(Visual representation of monitored threats and honeypots)*
-
-![Threat Monitoring Graphs](screenshots/graphs.png)
-
-### 🔍 Phishing Detection Outputs
-*(Analysis results for potentially malicious URLs)*
-
-![Phishing Detection](screenshots/phishing_detection.png)
-
-### 🤖 AI Cybersecurity Assistant
-*(Chatbot interface providing security advice)*
-
-![AI Chatbot](screenshots/chatbot.png)
-
-### 🔐 Password Analysis
-*(Password strength checking and generation tool)*
-
-![Password Analysis](screenshots/password_tool.png)
-
-# 8. FUTURE IMPROVEMENTS
-- Real-time threat intelligence feeds
-- Mobile application
-- Automated penetration testing tools
-- Dark web monitoring integration
-
-# 9. AUTHOR
+Author
 Vaibhav S Wandkar
