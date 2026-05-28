@@ -47,10 +47,26 @@ npm run dev
 ```
 
 # 7. SCREENSHOTS
-*(Add your screenshots here)*
-- Dashboard UI
-- Phishing Detection Output
-- Threat Monitoring Graphs
+
+### 🛡️ Main Dashboard & UI
+*(Overview of the user interface and main tools)*
+![Dashboard UI](screenshots/dashboard.png)
+
+### 📊 Threat Monitoring Graphs & Results
+*(Visual representation of monitored threats and honeypots)*
+![Threat Monitoring Graphs](screenshots/graphs.png)
+
+### 🔍 Phishing Detection Outputs
+*(Analysis results for potentially malicious URLs)*
+![Phishing Detection](screenshots/phishing_detection.png)
+
+### 🤖 AI Cybersecurity Assistant
+*(Chatbot interface providing security advice)*
+![AI Chatbot](screenshots/chatbot.png)
+
+### 🔐 Password Analysis
+*(Password strength checking and generation tool)*
+![Password Analysis](screenshots/password_tool.png)
 
 # 8. FUTURE IMPROVEMENTS
 - Real-time threat intelligence feeds
