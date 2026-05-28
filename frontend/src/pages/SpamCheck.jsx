@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Mail, Search, AlertTriangle, ShieldCheck, ShieldAlert, Loader2, Info } from 'lucide-react'
 
 const SpamCheck = () => {
   useEffect(() => {
-    // Scroll to top when component mounts
     window.scrollTo(0, 0)
   }, [])
   const [text, setText] = useState('')
@@ -32,135 +32,131 @@ const SpamCheck = () => {
     }
   }
 
-  const getClassificationColor = (classification) => {
-    return classification.toLowerCase() === 'spam' ? 'text-red-400' : 'text-green-400'
-  }
-
-  const getClassificationBg = (classification) => {
-    return classification.toLowerCase() === 'spam' ? 'bg-red-500/20 border-red-500/30' : 'bg-green-500/20 border-green-500/30'
-  }
+  const isSpam = result?.classification?.toLowerCase() === 'spam'
 
   return (
-    <div className="max-w-2xl mx-auto animate-fade-in">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4 text-gradient">📧 Spam Detection Tool</h1>
-        <p className="text-gray-200 text-lg">Analyze text content for potential spam patterns</p>
+    <div className="max-w-3xl mx-auto animate-fade-in">
+      <div className="text-center mb-10">
+        <div className="inline-flex p-4 bg-gradient-to-br from-amber-500/15 to-orange-600/15 rounded-2xl border border-amber-500/20 mb-5">
+          <Mail className="w-10 h-10 text-amber-400" />
+        </div>
+        <h1 className="text-4xl font-bold mb-3">
+          <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">Spam Detection</span>
+        </h1>
+        <p className="text-gray-400 text-lg max-w-xl mx-auto">Analyze text content for potential spam patterns and phishing indicators</p>
       </div>
 
-      <form onSubmit={handleCheck} className="card-gradient rounded-xl p-8 mb-8 border border-white/20 backdrop-blur-sm">
+      <form onSubmit={handleCheck} className="bg-[#0d1326]/80 backdrop-blur-xl rounded-2xl p-8 mb-8 border border-white/10">
         <div className="mb-6">
-          <label className="block text-white mb-3 font-semibold">📝 Enter text to analyze</label>
+          <label className="flex items-center gap-2 text-white mb-3 font-semibold text-sm">
+            <Search className="w-4 h-4 text-amber-400" />
+            Enter text to analyze
+          </label>
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 resize-none"
+            className="w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 transition-all duration-300 resize-none"
             rows="8"
-            placeholder="Paste the text content here..."
+            placeholder="Paste the email content or message here..."
             required
           />
-          <p className="text-gray-300 text-sm mt-2">Enter email content, messages, or any text to check for spam characteristics</p>
         </div>
 
         <button
           type="submit"
-          disabled={loading}
-          className="w-full btn-primary text-white font-semibold py-3 px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center space-x-2"
+          disabled={loading || !text}
+          className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-semibold py-3.5 px-6 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-amber-500/25 flex items-center justify-center space-x-2"
         >
           {loading ? (
             <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              <Loader2 className="w-5 h-5 animate-spin" />
               <span>Analyzing...</span>
             </>
           ) : (
             <>
-              <span>🔍</span>
-              <span>Check for Spam</span>
+              <Search className="w-5 h-5" />
+              <span>Analyze Content</span>
             </>
           )}
         </button>
       </form>
 
       {error && (
-        <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-4 mb-6 animate-slide-in">
-          <p className="text-red-300 flex items-center">
-            <span className="mr-2">❌</span>
-            {error}
-          </p>
+        <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-5 mb-6 animate-fade-in flex items-center gap-3">
+          <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" />
+          <p className="text-red-300">{error}</p>
         </div>
       )}
 
       {result && (
-        <div className="card-gradient rounded-xl p-8 border border-white/20 backdrop-blur-sm animate-slide-in">
-          <h2 className="text-2xl font-bold mb-6 text-white flex items-center">
-            <span className="mr-2">📊</span>
-            Analysis Result
+        <div className="bg-[#0d1326]/80 backdrop-blur-xl rounded-2xl p-8 border border-white/10 animate-fade-in space-y-6">
+          <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+            <Search className="w-6 h-6 text-amber-400" />
+            <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">Analysis Result</span>
           </h2>
 
-          <div className="space-y-6">
-            {/* Main Result */}
-            <div className={`rounded-lg p-6 border ${getClassificationBg(result.classification)}`}>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold text-white">Content Classification</h3>
-                <div className={`text-2xl ${getClassificationColor(result.classification)}`}>
-                  {result.classification.toLowerCase() === 'spam' ? '🚨' : '✅'}
+          <div className={`rounded-xl p-6 border ${isSpam ? 'bg-red-500/10 border-red-500/30' : 'bg-emerald-500/10 border-emerald-500/30'}`}>
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-xl font-semibold text-white">Classification</h3>
+              {isSpam ? <ShieldAlert className="w-8 h-8 text-red-400" /> : <ShieldCheck className="w-8 h-8 text-emerald-400" />}
+            </div>
+
+            <div className="space-y-5">
+              <div className="flex items-start space-x-3">
+                <Mail className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
+                <div className="flex-1">
+                  <p className="text-white font-semibold text-sm mb-1.5">Analyzed Text</p>
+                  <p className="text-gray-300 leading-relaxed bg-black/20 rounded-lg p-3 text-sm max-h-32 overflow-y-auto border border-white/5">
+                    {result.text}
+                  </p>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <span className="text-blue-300 mt-1">📝</span>
-                  <div className="flex-1">
-                    <p className="text-white font-semibold">Analyzed Text</p>
-                    <p className="text-gray-200 leading-relaxed bg-white/5 rounded-lg p-3 mt-1 max-h-32 overflow-y-auto">
-                      {result.text}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-3">
-                  <span className="text-blue-300">🏷️</span>
-                  <div>
-                    <p className="text-white font-semibold">Classification</p>
-                    <p className={`font-bold text-lg ${getClassificationColor(result.classification)}`}>
-                      {result.classification}
-                    </p>
-                  </div>
+              <div className="flex items-center space-x-3">
+                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
+                <div>
+                  <p className="text-white font-semibold text-sm mb-1">Status</p>
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold border ${
+                    isSpam ? 'bg-red-500/20 text-red-300 border-red-500/40' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                  }`}>
+                    {result.classification}
+                  </span>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Spam Indicators */}
-            <div className="bg-white/5 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-                <span className="mr-2">🔍</span>
-                Common Spam Indicators Checked
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  'Excessive capitalization',
-                  'Too many exclamation marks',
-                  'Urgent language',
-                  'Suspicious links',
-                  'Generic greetings',
-                  'Money-related keywords',
-                  'Unusual sender patterns'
-                ].map((indicator, index) => (
-                  <div key={index} className="flex items-center space-x-2 text-gray-300">
-                    <span className="text-yellow-400">•</span>
-                    <span className="text-sm">{indicator}</span>
-                  </div>
-                ))}
-              </div>
+          <div className="bg-white/5 rounded-xl p-6 border border-white/5">
+            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <Search className="w-5 h-5 text-amber-400" />
+              Indicators Checked
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              {[
+                'Excessive capitalization',
+                'Too many exclamation marks',
+                'Urgent language',
+                'Suspicious links',
+                'Generic greetings',
+                'Money-related keywords',
+                'Unusual sender patterns'
+              ].map((indicator, index) => (
+                <div key={index} className="flex items-center space-x-2.5 text-gray-300 p-2 rounded-lg hover:bg-white/5 transition-colors duration-200">
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                  <span className="text-sm">{indicator}</span>
+                </div>
+              ))}
             </div>
-
-            {/* Recommendations */}
-            <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
-              <p className="text-blue-200 text-sm flex items-start">
-                <span className="mr-2 mt-0.5">ℹ️</span>
-                <span><strong>Note:</strong> This tool uses basic pattern recognition. For advanced spam detection, consider using professional email filtering services or machine learning-based solutions.</span>
-              </p>
-            </div>
+          </div>
+          
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-5">
+             <h4 className="text-blue-300 font-semibold mb-2 flex items-center gap-2">
+               <Info className="w-5 h-5" />
+               Note
+             </h4>
+             <p className="text-blue-200/80 text-sm">
+               This tool uses basic pattern recognition. For advanced spam detection, consider using professional email filtering services or machine learning-based solutions.
+             </p>
           </div>
         </div>
       )}

@@ -14,13 +14,14 @@ import SpamCheck from './pages/SpamCheck'
 import Deepfake from './pages/Deepfake'
 import Chatbot from './pages/Chatbot'
 import ThreatDashboard from './pages/ThreatDashboard'
+import Profile from './pages/Profile'
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-slate-900">
+      <div className="min-h-screen bg-[#0a0e1a]">
         <Navbar />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 pt-24 pb-8">
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -33,6 +34,7 @@ function App() {
             <Route path="/deepfake" element={<Deepfake />} />
             <Route path="/chatbot" element={<Chatbot />} />
             <Route path="/threat-dashboard" element={<ThreatDashboard />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </main>

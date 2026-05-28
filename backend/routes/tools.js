@@ -860,17 +860,18 @@ router.post('/chat', verifyToken, async (req, res) => {
 
     // Mock response for development (OpenAI quota exceeded)
     const responses = {
-      'what is phishing': 'Phishing is a cyber attack where attackers try to trick you into giving sensitive information by pretending to be a trustworthy entity.',
-      'how to protect from malware': 'Use antivirus software, keep your system updated, avoid suspicious downloads, and be cautious with email attachments.',
-      'what is sql injection': 'SQL injection is a code injection technique that exploits vulnerabilities in an application\'s software by inserting malicious SQL statements.',
-      'default': 'I\'m CyberBot, your AI security assistant. I can help with cybersecurity questions. Please ask me something specific about security threats or best practices.'
+      'phishing': 'Phishing attacks typically involve deceptive emails, messages, or cloned websites designed to steal sensitive credentials. You can use our Phishing Check tool to paste and inspect suspicious links. To protect yourself, always inspect the sender\'s full email address, look for urgent or coercive language, and avoid downloading unexpected attachments.',
+      'password': 'A strong password security model is your first line of defense. Use at least 12–16 characters with a combination of uppercase letters, numbers, and symbols. We highly recommend using a reputable password manager like Bitwarden or 1Password. You can test your password\'s strength or generate randomized robust keys in our Password Security Tool page!',
+      'sql injection': 'SQL Injection (SQLi) is a critical database vulnerability where malicious SQL statements are injected into entry fields (like login inputs) for execution. Developers must use parameterized queries (prepared statements), input validation, and proper ORMs to prevent this. To learn about protecting databases, refer to official OWASP resources.',
+      'malware': 'Malware detection requires a layered defense. Keep your operating system and applications fully updated to patch active vulnerabilities. Install a trusted endpoint detection software (like Microsoft Defender or Malwarebytes), and never run executable files from untrusted sources. For files you want to keep fully confidential, you can encrypt them using our AES-256 File Encryption tool.',
+      'default': 'Hello! I am your CyberShield Security Assistant. I can help answer questions regarding cryptography, phishing detection, password hygiene, or social engineering. Ask me things like: "What is phishing?" or "How do I protect my files?"'
     };
 
     const lowerMessage = message.toLowerCase();
     let reply = responses.default;
 
     for (const key in responses) {
-      if (lowerMessage.includes(key)) {
+      if (key !== 'default' && lowerMessage.includes(key)) {
         reply = responses[key];
         break;
       }
